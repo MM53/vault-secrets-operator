@@ -334,3 +334,13 @@ vaultAuthGlobalRef generates the default VaultAuth spec.vaultAuthGlobalRef.
 {{- $ret | toYaml | nindent 4 -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+topologySpreadConstraints appends the "vso.chart.selectorLabels" to .Values.topologySpreadConstraints if no labelSelector was specified
+*/}}
+{{- define "vso.topologySpreadConstraints" -}}
+{{- $defaultLabelSelector := dict "labelSelector" (dict "matchLabels" (include "vso.chart.selectorLabels" . | fromYaml))}}
+{{- range $topologySpreadConstraint := .Values.topologySpreadConstraints}}
+{{- merge $topologySpreadConstraint $defaultLabelSelector | list | toYaml | nindent 10 }}
+{{- end }}
+{{- end }}
