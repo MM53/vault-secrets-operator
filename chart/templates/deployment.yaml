@@ -132,6 +132,7 @@ spec:
         volumeMounts:
         - mountPath: /var/run/podinfo
           name: podinfo
+      priorityClassName: {{ .Values.controller.priorityClassName }}
       securityContext:
         {{- toYaml .Values.controller.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "vso.chart.fullname" . }}-controller-manager
